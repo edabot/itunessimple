@@ -1,19 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import axios from 'axios'
-
-
-class ListItem extends Component {
-
-  render() {
-    console.log(this.props.item)
-    return (
-      <div>{this.props.item.artistName} {this.props.item.trackName}
-      </div>
-    )
-  }
-}
+import utils from './util'
+import ListItem from './ListItem'
 
 class App extends Component {
 
@@ -34,11 +22,7 @@ class App extends Component {
   }
 
   submitEntry() {
-    axios.get('https://itunes.apple.com/search?term=' + this.state.entryText)
-      .then(response => { this.updateList(response.data.results) })
-      .catch(function (error) {
-        console.log(error);
-      });
+    utils.submitEntry(this.state.entryText, this.updateList.bind(this))
     this.setState({entryText: ""})
   }
 
